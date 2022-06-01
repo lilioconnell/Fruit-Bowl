@@ -1,3 +1,6 @@
+import difflib
+
+
 def get_string(m):
     my_string = input(m)
     return my_string
@@ -77,10 +80,14 @@ def add_new_fruit(L):
     print_list(L)
     my_fruit = get_string("What new fruit would you like to add?").title()
     print()
+    a = my_fruit
     for x in L:
-        if my_fruit == x[0]:
-            get_string("{} are already in the list. Press any key to return to main menu".format(my_fruit))
-            main()
+        b = x[0]
+        seq = difflib.SequenceMatcher(None, a, b)
+        d = seq.ratio() * 100
+        if d > 60:
+            print("It looks like that's already in the list, please try again")
+            return None
     number = get_integer("How many of this fruit do you have?")
     print()
     new_list = [my_fruit, number]
